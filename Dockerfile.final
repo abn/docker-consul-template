@@ -1,0 +1,9 @@
+FROM scratch
+MAINTAINER Arun Neelicattu <arun.neelicattu@gmail.com>
+
+ADD ./bin/consul-template /consul-template
+ADD ./templates /templates
+
+VOLUME ["/templates"]
+
+ENTRYPOINT ["/consul-template"]
