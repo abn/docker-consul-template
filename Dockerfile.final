@@ -5,4 +5,5 @@ COPY ./rootfs /
 
 VOLUME ["/etc/consul-template"]
 
-ENTRYPOINT ["/usr/bin/consul-template"]
+ENTRYPOINT ["/usr/bin/consul-template", \
+    "-config=/etc/consul-template/config.d"]
