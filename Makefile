@@ -2,10 +2,11 @@
 ROOT		:= $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 BUILDER		:= local/builder
 
-REPOSITORY	:= docker.io/alectolytic/consul-template
+IMAGE		:= alectolytic/consul-template
+REPOSITORY	:= docker.io/$(IMAGE)
 VERSION		:= 0.10.0
 
-.PHONY: all build clean
+.PHONY: all build clean tag tag/$(VERSION) push push/$(VERSION)
 
 all: build
 
@@ -17,14 +18,17 @@ build:
 		-v $(shell which docker):$(shell which docker) \
 		-it $(BUILDER)
 
-push/$(VERSION):
+tag/$(VERSION):
 	@docker tag -f $(REPOSITORY):latest $(REPOSITORY):$(VERSION)
+
+tag: tag/$(VERSION)
+	@docker tag -f $(IMAGE) $(REPOSITORY)
+
+push/$(VERSION): tag
 	@docker push $(REPOSITORY):$(VERSION)
 
-push/latest:
+push: | push/$(VERSION)
 	@docker push $(REPOSITORY):latest
-
-push: | push/latest push/$(VERSION)
 
 clean:
 	@docker rmi -f $(BUILDER)
