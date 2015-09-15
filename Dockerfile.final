@@ -1,9 +1,8 @@
 FROM scratch
 MAINTAINER Arun Neelicattu <arun.neelicattu@gmail.com>
 
-ADD ./bin/consul-template /consul-template
-ADD ./templates /templates
+COPY ./rootfs /
 
-VOLUME ["/templates"]
+VOLUME ["/etc/consul-template"]
 
-ENTRYPOINT ["/consul-template"]
+ENTRYPOINT ["/usr/bin/consul-template"]

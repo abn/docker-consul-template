@@ -31,6 +31,13 @@ RUN go build \
 
 RUN mkdir templates
 
+ENV ROOTFS=./rootfs
+
+RUN mkdir -p ${ROOTFS}
+RUN mkdir -p ${ROOTFS}/usr/bin/ \
+    ${ROOTFS}/etc/consul-template/{config.d,templates}
+RUN mv ./bin/consul-template ${ROOTFS}/usr/bin/consul-template
+
 COPY Dockerfile.final ./Dockerfile
 
 CMD docker build -t alectolytic/consul-template ${PWD}
