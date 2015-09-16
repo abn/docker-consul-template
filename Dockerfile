@@ -38,6 +38,14 @@ RUN mkdir -p ${ROOTFS}/usr/bin/ \
     ${ROOTFS}/etc/consul-template/{config.d,templates}
 RUN mv ./bin/consul-template ${ROOTFS}/usr/bin/consul-template
 
+# install sh for "command"
+COPY ./loadbins /usr/bin/loadbins
+ENV DEST ${ROOTFS}
+RUN loadbins /usr/bin/sh
+RUN loadbins /lib64/libpthread.so.0
+RUN dnf -y install findutils
+RUN install -D /usr/bin/sh ${ROOTFS}/bin/sh
+
 COPY Dockerfile.final ./Dockerfile
 
 CMD docker build -t alectolytic/consul-template ${PWD}
