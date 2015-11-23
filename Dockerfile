@@ -12,7 +12,7 @@ ENV PATH /go/bin:${PATH}
 RUN mkdir -p ${GOPATH}
 
 ENV PACKAGE github.com/hashicorp/consul-template
-ENV VERSION 0.10.0
+ENV VERSION 0.11.1
 ENV GO_BUILD_TAGS netgo
 ENV CGO_ENABLED 0
 
